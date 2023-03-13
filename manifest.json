@@ -2,10 +2,14 @@
   "manifest_version": 2,
   "name": "StudyHouse Extension",
   "version": "0.0.1",
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["Content.js"]
+      "js": ["content.js"]
     }
   ],
   "browser_action": {
@@ -14,8 +18,7 @@
   },
   "web_accessible_resources": ["studyhouse.png"],
   "permissions": [
-    "https://www.youtube.com/*",
-    "https://www.facebook.com/*",
-    "https://www.netflix.com/*"
+    "tabs",
+    "storage"
   ]
 }
