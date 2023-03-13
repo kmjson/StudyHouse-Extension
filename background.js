@@ -18,35 +18,53 @@ chrome.runtime.onMessage.addListener((msg) => {
 });
 
 setInterval(() => {
-    let studyHouseFlag = false;
     chrome.tabs.query({}, (tabs) => {
+        let studyhouseFlag = false;
         for (let i = 0; i < tabs.length; i++) {
-            let tab = tabs[i];
-            let url = new URL(tab.url);
-            if (blockedWebsites.includes(url.hostname)) {
-                chrome.storage.local.get(["inSession"], (inSession) => {;
-                    if (inSession.inSession === "true") {
-                        chrome.tabs.sendMessage(tab.id, {
-                            from: "background",
-                            source: "blockedWebsite"
-                        });
-                    }
-                })
+            try {
+                let tab = tabs[i];
+                let url = new URL(tab.url);
+                if (url.hostname === "127.0.0.1" ||
+                    url.hostname === "localhost" ||
+                    url.hostname === "studyhouse-74491.firebaseapp.com" ||
+                    url.hostname === "studyhouse-74491.web.app") {
+                    studyhouseFlag = true;
+                }
+            } catch (e) {
+                console.log(e)
             }
-            if (url.hostname === "127.0.0.1" ||
-                url.hostname === "localhost" ||
-                url.hostname === "studyhouse-74491.firebaseapp.com" ||
-                url.hostname === "studyhouse-74491.web.app") {
-                studyHouseFlag = true;
-                chrome.tabs.sendMessage(tab.id, {
-                    from: "background",
-                    source: "studyHouse"
-                });
+        }
+        if (!studyhouseFlag) {
+            chrome.storage.local.set({"inSession": "false"}, () => {});
+        }
+        for (let i = 0; i < tabs.length; i++) {
+            try {
+                let tab = tabs[i];
+                let url = new URL(tab.url);
+                if (url.hostname === "127.0.0.1" ||
+                    url.hostname === "localhost" ||
+                    url.hostname === "studyhouse-74491.firebaseapp.com" ||
+                    url.hostname === "studyhouse-74491.web.app") {
+                    chrome.tabs.sendMessage(tab.id, {
+                        from: "background",
+                        source: "studyHouse"
+                    });
+                }
+                if (blockedWebsites.includes(url.hostname)) {
+                    chrome.storage.local.get(["inSession"], (inSession) => {
+                        if (inSession.inSession === "true") {
+                            chrome.tabs.sendMessage(tab.id, {
+                                from: "background",
+                                source: "blockedWebsite"
+                            });
+                        }
+                    })
+                }
+            }
+            catch (e) {
+                console.log(e);
             }
         }
     });
-    if (!studyHouseFlag) {
-        chrome.storage.local.set({"inSession": "false"}, () => {});
-    }
 }, 500);
   

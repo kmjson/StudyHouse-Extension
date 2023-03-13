@@ -53,20 +53,21 @@ chrome.runtime.onMessage.addListener((msg) => {
             // Enable Button
             if (document.getElementById("studyhouseStartButton")) {
                 document.getElementById("studyhouseStartButton").disabled = false;
-                document.getElementById("studyhouseStartButton").innerHTML = "Start Session"
+                document.getElementById("studyhouseStartButton").innerHTML = "Start Session";
             }
             // Browser Lock
-            if (document.getElementById("studyhouseEndButton")) {
+            // console.log(document.getElementById("studyhouseEndButton"));
+            if (document.getElementById("studyhouseEndButton") !== null) {
                 chrome.runtime.sendMessage({
                     from: "content",
                     inSession: "true"
-                })
+                });
             }
             else {
                 chrome.runtime.sendMessage({
                     from: "content",
                     inSession: "false"
-                })
+                });
             }
         }
     }
