@@ -33,12 +33,14 @@ const generateSTYLES = () => {
   
      </style>`;
   };
-  
+//   <img src="${chrome.runtime.getURL('studyhouse.png')}" id='studyhouse_logo'>
+//    <img src="C:\Users\jcbol\OneDrive\Documents\@Spring23\XC475\Study-House-Chrome-Ext\studyhouse.png" id='studyhouse_logo'>
+
 const generateHTML = () => {
+    var url = chrome.runtime.getURL('studyhouse.png');
     return `
     <div class='studyhouse_container'>
-        <img src="${chrome.extension.getURL('studyhouse.png')}" id='studyhouse_logo'>
-    </div>
+        <img src='https://raw.githubusercontent.com/kmjson/StudyHouse-Extension/main/studyhouse.png' id='studyhouse_logo'>    </div>
     <div class='studyhouse_text'>You should be productive right now instead!</div>
      `;
 };

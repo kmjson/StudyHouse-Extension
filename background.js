@@ -1,9 +1,3 @@
-const blockedWebsites = [
-    "www.youtube.com",
-    "www.facebook.com",
-    "www.netflix.com"
-]
-
 chrome.storage.local.set({"inSession": "false"}, () => {});
 
 chrome.runtime.onMessage.addListener((msg) => {
@@ -41,6 +35,7 @@ setInterval(() => {
             try {
                 let tab = tabs[i];
                 let url = new URL(tab.url);
+                console.log('before')
                 if (url.hostname === "127.0.0.1" ||
                     url.hostname === "localhost" ||
                     url.hostname === "studyhouse-74491.firebaseapp.com" ||
@@ -50,16 +45,47 @@ setInterval(() => {
                         source: "studyHouse"
                     });
                 }
-                if (blockedWebsites.includes(url.hostname)) {
-                    chrome.storage.local.get(["inSession"], (inSession) => {
-                        if (inSession.inSession === "true") {
-                            chrome.tabs.sendMessage(tab.id, {
-                                from: "background",
-                                source: "blockedWebsite"
-                            });
-                        }
-                    })
-                }
+                const blockedWebsites = [];
+                chrome.storage.sync.get(/* String or Array */["blockList"], function(items){
+                    const memorySites = items["blockList"] || [];
+                    console.log('test');
+                    console.log('items:', items);
+                    console.log('mem:', memorySites);
+                    // console.log(blockedWebsites);
+                    // let list = document.getElementById("blockListDisplay");
+                    console.log(items);
+                    (memorySites || []).forEach((item) => {
+                        blockedWebsites.push(item);
+                        console.log('in here');
+                        console.log(item);
+                        // let li = document.createElement("li");
+                        // li.innerText = item;
+                        // list.appendChild(li);
+                    });
+                    console.log('made it to after');
+                    console.log(blockedWebsites);
+                    console.log('outside the sync');
+                    console.log('url:', url.hostname);
+                    console.log('blockedWebsites', blockedWebsites);
+                    console.log(blockedWebsites.values);
+    
+                    
+                    if (blockedWebsites.includes(url.hostname)) {
+                        console.log('the if works');
+                        console.log(url.hostname);
+                        chrome.storage.local.get(["inSession"], (inSession) => {
+                            console.log('getting storage works');
+                            if (inSession.inSession === "true") {
+                                console.log('its in there');
+                                chrome.tabs.sendMessage(tab.id, {
+                                    from: "background",
+                                    source: "blockedWebsite"
+                                });
+                            }
+                        })
+                    }
+                });
+               
             }
             catch (e) {
                 console.log(e);

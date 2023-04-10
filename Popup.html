@@ -1,18 +1,31 @@
 <!DOCTYPE html>
-<html>
-  <head> </head>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./popup.css" />
+  </head>
   <body>
-    <div class="main">
-      <h1>StudyHouse Extension</h1>
-      <hr />
-      <span>
-        Current Blocked Sites:
-        <span style="color: #ff0100;">Youtube</span>
-        |
-        <span style="color: #0e8ef2;">Facebook</span>
-        |
-        <span style="color: #e50914;">Netflix</span>
-      </span>
-    </div>
+    <template id="li_template">
+      <li>
+          <h3 class="title">Tab Title</h3>
+          <p class="pathname">Tab Pathname</p>
+      </li>
+    </template>
+    
+    <h1>StudyHouse</h1>
+  
+
+    <!-- <form>
+        <label for="blocked-site">First name:</label><br>
+        <input type="text" id="blocked-site" name="blocked-site"><br>
+    </form> -->
+
+    <p>Site to Block: <input id="apivalue" type="text" name="value"></p>
+    <button> Block Site </button>
+    
+    <ul id="blockListDisplay"></ul>
+    <script src="./mod_memory.js" type="module"></script>
   </body>
 </html>
