@@ -1,5 +1,38 @@
 chrome.storage.local.set({"inSession": "false"}, () => {});
 
+
+function sync(site) {
+    // sync a checkmark element with the boolean value in Storage API 
+    var returnValue = false;
+    chrome.storage.sync.get(/* String or Array */[site], function(items){
+        var isBlocked = items[site] || false;
+        console.log('here is isblocked in get fxn', isBlocked);
+        if (isBlocked === undefined){
+            isBlocked = false;
+        }
+        returnValue = isBlocked;
+    });
+    console.log('here return value', returnValue);
+    return returnValue;
+
+}
+
+// create the offscreen document if it doesn't already exist
+async function createOffscreen() {
+    if (await chrome.offscreen.hasDocument?.()) return;
+    await chrome.offscreen.createDocument({
+      url: 'offscreen.html',
+      reasons: ['BLOBS'],
+      justification: 'keep service worker running',
+    });
+}
+
+chrome.runtime.onStartup.addListener(() => {
+    chrome.storage.local.set({"inSession": "false"}, () => {});
+    createOffscreen();
+});
+
+
 chrome.runtime.onMessage.addListener((msg) => {
     if (msg.from === "content") {
         if (msg.inSession === "true") {
@@ -31,6 +64,7 @@ setInterval(() => {
         if (!studyhouseFlag) {
             chrome.storage.local.set({"inSession": "false"}, () => {});
         }
+           
         for (let i = 0; i < tabs.length; i++) {
             try {
                 let tab = tabs[i];
@@ -45,46 +79,51 @@ setInterval(() => {
                         source: "studyHouse"
                     });
                 }
-                const blockedWebsites = [];
-                chrome.storage.sync.get(/* String or Array */["blockList"], function(items){
-                    const memorySites = items["blockList"] || [];
-                    console.log('test');
-                    console.log('items:', items);
-                    console.log('mem:', memorySites);
-                    // console.log(blockedWebsites);
-                    // let list = document.getElementById("blockListDisplay");
-                    console.log(items);
-                    (memorySites || []).forEach((item) => {
-                        blockedWebsites.push(item);
-                        console.log('in here');
-                        console.log(item);
-                        // let li = document.createElement("li");
-                        // li.innerText = item;
-                        // list.appendChild(li);
-                    });
-                    console.log('made it to after');
-                    console.log(blockedWebsites);
-                    console.log('outside the sync');
-                    console.log('url:', url.hostname);
-                    console.log('blockedWebsites', blockedWebsites);
-                    console.log(blockedWebsites.values);
-    
-                    
-                    if (blockedWebsites.includes(url.hostname)) {
-                        console.log('the if works');
-                        console.log(url.hostname);
-                        chrome.storage.local.get(["inSession"], (inSession) => {
-                            console.log('getting storage works');
-                            if (inSession.inSession === "true") {
-                                console.log('its in there');
-                                chrome.tabs.sendMessage(tab.id, {
-                                    from: "background",
-                                    source: "blockedWebsite"
-                                });
+                // var blockedWebsites = [];
+                const allSites = ['facebook', 'twitter', 'instagram', 'linkedin', 'netflix', 'hulu', 'hbomax', 'twitch'];
+                const urls = ['www.facebook.com', 'twitter.com', 'www.instagram.com', 'www.linkedin.com', 'www.netflix.com', 'www.hulu.com', 'www.hbomax.com', 'www.twitch.tv'];
+                for (let i=0; i<allSites.length; i++){
+                    console.log('heres the site', allSites[i]);
+                    chrome.storage.sync.get(/* String or Array */[allSites[i]], function(items){
+                        var isBlocked = items[allSites[i]] || false;
+                        console.log('here is isblocked in get fxn', isBlocked);
+                        if (isBlocked === undefined){
+                            isBlocked = false;
+                        }
+                        console.log('heres if it is blocked', isBlocked);
+                        if (isBlocked === true) {
+                            console.log("ITS TRUE!!");
+                            console.log(urls[i]);
+                            if (urls[i] === url.hostname) {
+                                console.log('INSESSION!!!!');
+                                chrome.storage.local.get(["inSession"], (inSession) => {
+                                    if (inSession.inSession === "true") {
+                                        chrome.tabs.sendMessage(tab.id, {
+                                            from: "background",
+                                            source: "blockedWebsite"
+                                        });
+                                    }
+                                })
                             }
-                        })
-                    }
-                });
+                            // blockedWebsites.push(urls[i]);
+                            console.log('in the if heres blocked websites', blockedWebsites);
+                        }
+                    });
+                    
+                }    
+                console.log('blockedsites', blockedWebsites);
+                // if (blockedWebsites.includes(url.hostname)) {
+                //     console.log('INSESSION!!!!');
+                //     chrome.storage.local.get(["inSession"], (inSession) => {
+                //         if (inSession.inSession === "true") {
+                //             chrome.tabs.sendMessage(tab.id, {
+                //                 from: "background",
+                //                 source: "blockedWebsite"
+                //             });
+                //         }
+                //     })
+                // }
+              
                
             }
             catch (e) {

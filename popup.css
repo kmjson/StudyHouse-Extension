@@ -1,24 +1,53 @@
 body {
     width: 20rem;
+    background-color: #f8dec7;
 }
   
 ul {
   list-style-type: none;
   padding-inline-start: 0;
   margin: 1rem 0;
+  background-color: #dc83a4;
+  border-color: #dc83a4;
+  border-width: 1rem;
+  border-radius: 2%;
 }
-  
+
+form {
+  border: #dc83a4;
+  border-radius: 2%;
+}
+
+
 li {
+  background: #dc83a4;
+  border-radius: 3rem;
+  color: white;
   padding: 0.25rem;
-}
-li:nth-child(odd) {
-  background: #80808030;
-}
-li:nth-child(even) {
-  background: #ffffff;
+
 }
   
+h1 {
+  color: #dc83a4;
+}
+h4 {
+  padding:0;
+  margin:0.2rem;
+}
 h3,
 p {
   margin: 0;
+  color: #dc83a4;
+}
+
+button {
+  display: block;
+  margin: auto;
+  font-size: 0.8rem;
+  background-color: #dc83a4;
+  border: none;
+  padding: 0.75rem;
+  border-radius: 1.5rem;
+  color: #fff;
+  cursor: pointer;
 }

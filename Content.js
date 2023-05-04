@@ -4,7 +4,7 @@ const generateSTYLES = () => {
     @import url(https://fonts.googleapis.com/css?family=opensans:500);
   
     body {
-      background: #9484bd !important;
+      background: #f8dec7 !important;
       color: #fff2cc !important;
       font-family: "Open Sans", sans-serif !important;
       overflow: hidden !important;
@@ -23,25 +23,17 @@ const generateSTYLES = () => {
     #studyhouse_logo {
       max-width: 90% !important;
     }
-  
-    .studyhouse_text {
-      margin: auto !important;
-      max-width: 80vw !important;
-      font-size: 4rem !important;
-      text-align: center !important;
-    }
-  
      </style>`;
   };
-//   <img src="${chrome.runtime.getURL('studyhouse.png')}" id='studyhouse_logo'>
-//    <img src="C:\Users\jcbol\OneDrive\Documents\@Spring23\XC475\Study-House-Chrome-Ext\studyhouse.png" id='studyhouse_logo'>
 
 const generateHTML = () => {
     var url = chrome.runtime.getURL('studyhouse.png');
     return `
     <div class='studyhouse_container'>
-        <img src='https://raw.githubusercontent.com/kmjson/StudyHouse-Extension/main/studyhouse.png' id='studyhouse_logo'>    </div>
-    <div class='studyhouse_text'>You should be productive right now instead!</div>
+        <img src='https://raw.githubusercontent.com/kmjson/StudyHouse-Extension/main/studyhouse.png' id='studyhouse_logo'>
+        <img src='https://raw.githubusercontent.com/kmjson/StudyHouse-Extension/main/text1.png' id='studyhouse_logo'>
+        <img src='https://raw.githubusercontent.com/kmjson/StudyHouse-Extension/main/text2.png' id='studyhouse_logo'>
+    </div>
      `;
 };
 

@@ -15,17 +15,85 @@
     </template>
     
     <h1>StudyHouse</h1>
-  
+
+    <div id="all">
+      <h3>Block the sites you find distracting!</h3>
+      <div class="toggle">
+      <form id="streamingForm">
+
+        
+        <ul>
+          <li>
+            <h4>Streaming:</h4>
+          </li>
+          <li>
+            <input type="checkbox" class="checkbox" id="netflix" />
+            <label class="label" for="netflix">Netflix</label>
+          </li>
+          <li>
+            <input type="checkbox" class="checkbox" id="hulu" />
+            <label class="label" for="hulu">Hulu</label>
+          </li>
+          <li>
+            <input type="checkbox" class="checkbox" id="hbomax" />
+            <label class="label" for="hbomax">HBO Max</label>
+          </li>
+          <li>
+            <input type="checkbox" class="checkbox" id="twitch" />
+            <label class="label" for="twitch">Twitch</label>
+          </li>
+        </ul>
+
+        <!-- <input type="checkbox" class="checkbox" id="chk_streaming" /> -->
+        <button type="button" id="all_streaming">Select All Streaming</button>
+
+      </form>
+
+      </div>
+      <div class="toggle">
+      <form id="socialMediaForm">
+
+      
+        <ul>
+          <li>
+            <h4>Social Media:</h4>
+          </li>
+          <li>
+            <input type="checkbox" class="checkbox" id="facebook" />
+            <label class="label" for="facebook">FaceBook</label>
+          </li>
+          <li>
+            <input type="checkbox" class="checkbox" id="instagram" />
+            <label class="label" for="instagram">Instagram</label>
+          </li>
+          <li>
+            <input type="checkbox" class="checkbox" id="twitter" />
+            <label class="label" for="twitter">Twitter</label>
+          </li>
+          <li>
+            <input type="checkbox" class="checkbox" id="linkedin" />
+            <label class="label" for="linkedin">LinkedIn</label>
+          </li>
+        </ul>
+
+        <!-- <input type="checkbox" class="checkbox" id="chk_streaming" /> -->
+        <button type="button" id="all_social_media">Select All Social Media</button>
+
+      </form>
+
+      </div>
+    </div>
+
+    <h3 id="off"></h3>
 
     <!-- <form>
         <label for="blocked-site">First name:</label><br>
         <input type="text" id="blocked-site" name="blocked-site"><br>
     </form> -->
 
-    <p>Site to Block: <input id="apivalue" type="text" name="value"></p>
-    <button> Block Site </button>
-    
+
     <ul id="blockListDisplay"></ul>
     <script src="./mod_memory.js" type="module"></script>
+          
   </body>
 </html>
