@@ -16,13 +16,22 @@ const generateSTYLES = () => {
       padding: 50px !important;
       padding-top: 150px !important;
       padding-bottom: 20px !important;
-      display: flex !important;
-      justify-content: center !important;
     }
   
     #studyhouse_logo {
-      max-width: 90% !important;
+      width: 80% !important;
+      max-width: 700px !important;
+      display: block !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
     }
+
+    #studyhouse_text {
+        width: 90% !important;
+        display: block !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+      }
      </style>`;
   };
 
@@ -31,8 +40,10 @@ const generateHTML = () => {
     return `
     <div class='studyhouse_container'>
         <img src='https://raw.githubusercontent.com/kmjson/StudyHouse-Extension/main/studyhouse.png' id='studyhouse_logo'>
-        <img src='https://raw.githubusercontent.com/kmjson/StudyHouse-Extension/main/text1.png' id='studyhouse_logo'>
-        <img src='https://raw.githubusercontent.com/kmjson/StudyHouse-Extension/main/text2.png' id='studyhouse_logo'>
+        <br>
+        <img src='https://raw.githubusercontent.com/kmjson/StudyHouse-Extension/main/text1.png' id='studyhouse_text'>
+        <br>
+        <img src='https://raw.githubusercontent.com/kmjson/StudyHouse-Extension/main/text2.png' id='studyhouse_text'>
     </div>
      `;
 };
